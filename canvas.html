@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<body>
+<button onclick="abcdefg()">I knew I love you.</button>
+<canvas id="canvas" width="490" height="220"/>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+  context = document.getElementById('canvas').getContext("2d");
+  var clickX = new Array();
+  var clickY = new Array();
+  var clickDrag = new Array();
+  var paint;
+  var img1 = new Image();
+  img1.src = "Jimmy.jpg";
+  img1.onload = function(){
+    context.drawImage(img1,10,10,150,180);
+  }
+  var last = 0;
+  function addClick(x, y, dragging)
+  {
+    clickX.push(x);
+    clickY.push(y);
+    clickDrag.push(dragging);
+  }
+
+  function abcdefg(){
+    var data = canvas.toDataURL().replace("image/png", "image/octet-stream");;
+    debugger;
+    window.location.href = data;
+  }
+
+  $('#canvas').mousedown(function(e){
+    paint = true;
+    addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+    redraw();
+  });
+  
+  $('#canvas').mousemove(function(e){
+    if(paint){
+      addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+      redraw();
+    }
+  });
+
+  $('#canvas').mouseup(function(e){
+    paint = false;
+  });
+
+  $('#canvas').mouseleave(function(e){
+    paint = false;
+  });
+
+  function redraw(){
+    //context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+    
+    context.strokeStyle = "#df4b26";
+    context.lineJoin = "round";
+    context.lineWidth = 5;
+
+    for(var i=last; i < clickX.length; i++) {
+      context.beginPath();
+      if(clickDrag[i] && i){
+        context.moveTo(clickX[i-1], clickY[i-1]);
+      }else{
+        context.moveTo(clickX[i]-1, clickY[i]-1);
+      }
+      context.lineTo(clickX[i], clickY[i]);
+      context.closePath();
+      context.stroke();
+      last = i;
+    }
+  }
+</script>
+</body>
+</html>
