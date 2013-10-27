@@ -1,13 +1,26 @@
 $(function(){
   context = $('#canvas')[0].getContext("2d");
+
+  var colors = {purple: "palevioletred", green: "olivedrab", brown: "sienna", yellow: "gold"};
+  var curColor = colors.purple;
+  var curSize = 5;
+
   var clickX = [], clickY = [],  clickDrag = [];
-  var last = 0, paint = false;
+  var next = 0, paint = false;
 
   function addClick(x, y, dragging){
     clickX.push(x);
     clickY.push(y);
     clickDrag.push(dragging);
   }
+
+  $('.color').on('click', function(){
+    curColor = colors[ $(this).val() ];
+  });
+
+  $('.size').on('click', function(){
+    curSize = $(this).val();
+  })
 
   $('#download_image').on('click', function(){
     var data = canvas.toDataURL().replace("image/png", "image/octet-stream");
@@ -41,12 +54,9 @@ $(function(){
   });
 
   function redraw(){
-    
-    context.strokeStyle = "#df4b26";
     context.lineJoin = "round";
-    context.lineWidth = 5;
 
-    for(var i=last; i < clickX.length; i++) {
+    for(var i=next; i < clickX.length; i++) {
       context.beginPath();
       if(clickDrag[i] && i){
         context.moveTo(clickX[i-1], clickY[i-1]);
@@ -55,8 +65,10 @@ $(function(){
       }
       context.lineTo(clickX[i], clickY[i]);
       context.closePath();
+      context.strokeStyle = curColor;
+      context.lineWidth = curSize;
       context.stroke();
-      last = i;
+      next = i+1;
     }
   }
 });

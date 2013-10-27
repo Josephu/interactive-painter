@@ -82,6 +82,10 @@ button, .button {
   -webkit-border-radius: 5px; 
 }
 
+button[value=purple] { background-color: palevioletred}
+button[value=green] { background-color: olivedrab }
+button[value=brown] { background-color: sienna }
+button[value=yellow] { background-color: gold }
 
 
 
