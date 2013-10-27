@@ -1,11 +1,19 @@
 $(function(){
+  $('#canvas')[0].ondragover = function() { return false; };
+  $('#canvas')[0].ondrop = function(e){
+    uploadImage( e.dataTransfer.files[0] );
+    return false;
+  };
   $('#load').on('click', function() {
-    var f = document.getElementById("image-to-upload").files[0];
-    if(typeof f != "undefined"){
+    uploadImage( document.getElementById("image-to-upload").files[0] );
+  });
+
+  function uploadImage(file){
+    if(typeof file != "undefined"){
       var ctx = document.getElementById('canvas').getContext('2d');
       var img = new Image();
       var url = window.URL || window.webkitURL;
-      var src = url.createObjectURL(f);
+      var src = url.createObjectURL(file);
       img.src = src;
       img.onload = function(){
         dimension = resizeImage(img);
@@ -14,7 +22,8 @@ $(function(){
         url.revokeObjectURL(src);
       };
     }
-  });
+  }
+
   function resizeImage(img){
     var MAX_WIDTH = 640;
     var MAX_HEIGHT = 480;

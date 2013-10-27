@@ -3,6 +3,7 @@ $(function(){
 
   var colors = {purple: "palevioletred", green: "olivedrab", brown: "sienna", yellow: "gold"};
   var curColor = colors.purple;
+  var curTool = "marker";
   var curSize = 5;
 
   var clickX = [], clickY = [],  clickDrag = [];
@@ -13,6 +14,10 @@ $(function(){
     clickY.push(y);
     clickDrag.push(dragging);
   }
+
+  $('.tool').on('click', function(){
+    curTool = $(this).val();
+  });
 
   $('.color').on('click', function(){
     curColor = colors[ $(this).val() ];
@@ -65,7 +70,10 @@ $(function(){
       }
       context.lineTo(clickX[i], clickY[i]);
       context.closePath();
-      context.strokeStyle = curColor;
+      if(curTool == 'eraser')
+        context.strokeStyle = "white";
+      else
+        context.strokeStyle = curColor;
       context.lineWidth = curSize;
       context.stroke();
       next = i+1;
