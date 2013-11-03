@@ -19,19 +19,19 @@ $(function(){
     if(typeof file != "undefined"){
       var ctx = document.getElementById('canvas').getContext('2d');
       var img = new Image();
-      if( file.substring(0, 4) == "http" ){
+      if( typeof file == "string" ){
         img.src = file;
       }
       else{
         var url = window.URL || window.webkitURL;
         var src = url.createObjectURL(file);
         img.src = src;
+        url.revokeObjectURL(src);
       }
       img.onload = function(){
         dimension = resizeImage(img);
         $('#canvas').attr({width: dimension.width, height: dimension.height});
         ctx.drawImage(img,0,0, dimension.width, dimension.height);
-        url.revokeObjectURL(src);
       };
     }
   }
