@@ -4,17 +4,29 @@ $(function(){
     uploadImage( e.dataTransfer.files[0] );
     return false;
   };
-  $('#load').on('click', function() {
+  $("#find_file").on('click', function() {
+    $("#image-to-upload").trigger('click');
+  });
+  $("#image-to-upload").on('change', function() {
     uploadImage( document.getElementById("image-to-upload").files[0] );
   });
-
+  $('#download_image').on('click', function(){
+    var canvas = document.getElementById('canvas');
+    this.href = canvas.toDataURL().replace("image/png", "image/octet-stream");
+    this.download = "image.png";
+  });
   function uploadImage(file){
     if(typeof file != "undefined"){
       var ctx = document.getElementById('canvas').getContext('2d');
       var img = new Image();
-      var url = window.URL || window.webkitURL;
-      var src = url.createObjectURL(file);
-      img.src = src;
+      if( file.substring(0, 4) == "http" ){
+        img.src = file;
+      }
+      else{
+        var url = window.URL || window.webkitURL;
+        var src = url.createObjectURL(file);
+        img.src = src;
+      }
       img.onload = function(){
         dimension = resizeImage(img);
         $('#canvas').attr({width: dimension.width, height: dimension.height});
@@ -43,4 +55,9 @@ $(function(){
     }
     return {width: width, height: height};
   }
+
+  function loadInitialImage(){
+    uploadImage( document.URL+'/img/image.png' );
+  }
+  loadInitialImage();
 });

@@ -1,7 +1,7 @@
 $(function(){
-  context = $('#canvas')[0].getContext("2d");
+  var context = $('#canvas')[0].getContext("2d");
 
-  var colors = {purple: "palevioletred", green: "olivedrab", brown: "sienna", yellow: "gold"};
+  var colors = {purple: "palevioletred", green: "olivedrab", brown: "sienna", yellow: "gold", black: "black", blue: "deepskyblue", orange: "darkorange", gray: "gray"};
   var curColor = colors.purple;
   var curTool = "marker";
   var curSize = 5;
@@ -25,12 +25,6 @@ $(function(){
 
   $('.size').on('click', function(){
     curSize = $(this).val();
-  })
-
-  $('#download_image').on('click', function(){
-    var data = canvas.toDataURL().replace("image/png", "image/octet-stream");
-    this.href = data;
-    this.download = "image.png";
   });
 
   $('#clear_canvas').on('click', function(){
