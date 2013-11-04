@@ -31,20 +31,23 @@ $(function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
   });
 
-  $('#canvas').mousedown(function(e){
+  $('#canvas').on( "touchstart mousedown", function(e){
     paint = true;
     addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
     redraw();
   });
   
-  $('#canvas').mousemove(function(e){
+  $('#canvas').on( "touchmove mousemove", function(e){
     if(paint){
-      addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+      var pageX = isMobile.any() ? e.originalEvent.touches[0].pageX : e.pageX;
+      var pageY = isMobile.any() ? e.originalEvent.touches[0].pageY : e.pageY;
+      addClick(pageX - this.offsetLeft, pageY - this.offsetTop, true);
       redraw();
     }
+    e.preventDefault();
   });
 
-  $('#canvas').mouseup(function(e){
+  $('#canvas').on( "touchend mouseup", function(e){
     paint = false;
   });
 
