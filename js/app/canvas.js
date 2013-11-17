@@ -6,12 +6,15 @@ $(function(){
   var curTool = "marker";
   var curSize = 5;
 
-  var clickX = [], clickY = [],  clickDrag = [];
+  var clickX = [], clickY = [], clickDrag = [], clickColor = [], clickSize = [], clickTool = [];
   var next = 0, paint = false;
 
   function addClick(x, y, dragging){
     clickX.push(x);
     clickY.push(y);
+    clickColor.push(curColor);
+    clickSize.push(curSize);
+    clickTool.push(curTool);
     clickDrag.push(dragging);
   }
 
@@ -29,22 +32,28 @@ $(function(){
 
   $('#clear_canvas').on('click', function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+    clickX = [], clickY = [], clickDrag = [], clickColor = [], clickSize = [], clickTool = [];
   });
 
   $('#canvas').on( "touchstart mousedown", function(e){
-    paint = true;
-    addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-    redraw();
+    if(e.type == "mousedown" || (e.type == "touchstart" && e.originalEvent.touches.length == 1) ){
+      paint = true;
+      addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      redraw();
+    }
+    else{
+      paint = false;
+    }
   });
-  
+
   $('#canvas').on( "touchmove mousemove", function(e){
     if(paint){
       var pageX = isMobile.any() ? e.originalEvent.touches[0].pageX : e.pageX;
       var pageY = isMobile.any() ? e.originalEvent.touches[0].pageY : e.pageY;
       addClick(pageX - this.offsetLeft, pageY - this.offsetTop, true);
       redraw();
+      e.preventDefault();
     }
-    e.preventDefault();
   });
 
   $('#canvas').on( "touchend mouseup", function(e){
@@ -58,7 +67,7 @@ $(function(){
   function redraw(){
     context.lineJoin = "round";
 
-    for(var i=next; i < clickX.length; i++) {
+    for(var i=0; i < clickX.length; i++) {
       context.beginPath();
       if(clickDrag[i] && i){
         context.moveTo(clickX[i-1], clickY[i-1]);
@@ -67,11 +76,14 @@ $(function(){
       }
       context.lineTo(clickX[i], clickY[i]);
       context.closePath();
-      if(curTool == 'eraser')
+      if(clickTool[i] == 'eraser'){
         context.strokeStyle = "white";
-      else
-        context.strokeStyle = curColor;
-      context.lineWidth = curSize;
+        context.lineWidth = clickSize[i]+1;
+      }
+      else{
+        context.strokeStyle = clickColor[i];
+        context.lineWidth = clickSize[i];
+      }
       context.stroke();
       next = i+1;
     }

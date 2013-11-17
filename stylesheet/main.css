@@ -6,16 +6,30 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-body, h1 {
-  padding: 0px 50px;
-  max-width: 640px;
-  margin: 1.4em auto;
-  font: normal normal normal 1em/1.2em 'Bree Serif', 'Helvetica Neue', Arial, sans-serif;
+@media screen and (min-width:1025px) {
+  body, h1 {
+    padding: 0px 50px;
+    max-width: 640px;
+    margin: 1.4em auto;
+    font: normal normal normal 1em/1.2em 'Bree Serif', 'Helvetica Neue', Arial, sans-serif;
+  }
+  h1 {
+    font-weight: bold;
+    font-size: 1.6em;
+    text-align: center;
+  }
 }
-h1 {
-  font-weight: bold;
-  font-size: 1.6em;
-  text-align: center;
+@media screen and (max-width:1024px){
+  body {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  h1 {
+    visibility: hidden;
+  }
+}
+#palette{
+  width: 640px;
 }
 button {
   border: 1px solid transparent;
@@ -37,7 +51,7 @@ button.color:hover {
   -moz-opacity: 0.8;
   opacity: 0.8;
 }
-button.tool:hover {
+button.icon:hover {
   filter: alpha(opacity=60);
   -moz-opacity: 0.6;
   opacity: 0.6;
@@ -53,7 +67,7 @@ button[value=blue] { background-color: deepskyblue }
 button[value=gray] { background-color: gray }
 button[value=black] { background-color: black }
 button[value=orange] { background-color: darkorange }
-button.tool { background-color: #eee; }
+button.icon { background-color: #eee; }
 
 ul {
   padding: 0;

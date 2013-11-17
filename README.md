@@ -8,10 +8,8 @@ Tested on Chrome, Firefox, Safari. IE is not supported.
 TODO:
 -----
 
-1. Better css outfit
-2. Radius gradient as an art tool
-3. Undo drawing
-4. Support mobile UI and file processing
+1. Radius gradient as an art tool
+2. Undo drawing
 
 Feedback
 -----------
