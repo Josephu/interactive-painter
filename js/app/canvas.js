@@ -30,6 +30,25 @@ $(function(){
     curSize = $(this).val();
   });
 
+  $('#undo').on('click', function(){
+    var i;
+    for(i = clickDrag.length-1; i >= 0 &&  clickDrag[i] != undefined; i--){
+      clickX.pop();
+      clickY.pop();
+      clickDrag.pop();
+      clickColor.pop();
+      clickSize.pop();
+      clickTool.pop();
+    }
+    clickX.pop();
+    clickY.pop();
+    clickDrag.pop();
+    clickColor.pop();
+    clickSize.pop();
+    clickTool.pop();
+    redraw();
+  });
+
   $('#clear_canvas').on('click', function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
     clickX = [], clickY = [], clickDrag = [], clickColor = [], clickSize = [], clickTool = [];
@@ -65,6 +84,7 @@ $(function(){
   });
 
   function redraw(){
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
     context.lineJoin = "round";
 
     for(var i=0; i < clickX.length; i++) {

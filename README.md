@@ -9,7 +9,6 @@ TODO:
 -----
 
 1. Radius gradient as an art tool
-2. Undo drawing
 
 Feedback
 -----------
