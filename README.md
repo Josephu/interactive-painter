@@ -3,9 +3,9 @@ Image Painter
 
 A html5 canvas whiteboard to upload image, modify, and download the completed artwork back to your computer.
 
-Tested on Chrome, Firefox, Safari. IE is not supported.
+Tested on Chrome, Firefox, Safari and support desktop and mobile devices. Note that IE is not supported. [Click to see example site] (http://josephu.github.io/image-painter)
 
-TODO:
+TODO
 -----
 
 1. Radius gradient as an art tool
