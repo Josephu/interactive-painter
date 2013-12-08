@@ -1,14 +1,29 @@
-Image Painter
--------------
+Interactive Painter
+-------------------
 
 A html5 canvas whiteboard to upload image, modify, and download the completed artwork back to your computer.
 
-Tested on Chrome, Firefox, Safari and support desktop and mobile devices. Note that IE is not supported. [Click to see example site] (http://josephu.github.io/image-painter)
+Interactive mode supports multiple user sharing the same whiteboard, using Server Sent Event in html5.
+
+Tested on Chrome, Firefox, Safari and support desktop and mobile devices. Note that IE is not supported. [Click to see example site] (http://josephu.github.io/interactive-painter)
+
+Note
+----
+
+A good thanks to [HTML5hacks](http://html5hacks.com/blog/2013/04/21/push-notifications-to-the-browser-with-server-sent-events/), providing simple yet complete example for SSE.
+
+The tricky part is the synchronization issue for managing connection and data. Connection has to be fix by having atomic operation using mutex, while data has to be fixed by merging diff data.
 
 TODO
 -----
 
-1. Radius gradient as an art tool
+1. Button pressed effect
+2. Support interactive painting
+  - deploy to heroku
+  - update README
+3. Integrational test
+4. Develop with (websocket and EM)[http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets]
+5. Play with (event source and EM)[http://dev.af83.com/2011/08/03/em-eventsource-an-eventmachine-client-for-server-sent-events.html]
 
 Feedback
 -----------
