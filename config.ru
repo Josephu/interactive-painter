@@ -1,2 +1,2 @@
 require './streamer'
-Streamer.run!({port: 3000})
+Streamer.run!({port: 80})
