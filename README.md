@@ -14,6 +14,11 @@ A good thanks to [HTML5hacks](http://html5hacks.com/blog/2013/04/21/push-notific
 
 The tricky part is the synchronization issue for managing connection and data. Connection has to be fix by having atomic operation using mutex, while data has to be fixed by merging diff data.
 
+Browser support
+---------------
+Server sent event: http://caniuse.com/eventsource
+Web socket: http://caniuse.com/websockets
+
 TODO
 -----
 

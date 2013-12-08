@@ -32,7 +32,7 @@ class ConnectionGroupManager
   # Insert data to connection group and send data to all connections
   def self.send_data(key, data)
     insert_data(key, data)
-    @@connection_groups[ key ].connections.each { |connection| connection << "data: #{data.to_json}\n\n" }
+    @@connection_groups[ key ].connections.each { |connection| connection << "data: #{get_data(key).to_json}\n\n" }
   end
 
   # Given server receive data from connection
