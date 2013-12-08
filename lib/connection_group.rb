@@ -19,7 +19,7 @@ class ConnectionGroup
 
   def insert_data(new_data)
     if data
-      queue_index = -1
+      queue_index = data["x"].length
       data["x"].length.times.each do |i|
         if data["x"][i] != new_data["x"][i]
           queue_index = i

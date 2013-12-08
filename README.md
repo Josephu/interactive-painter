@@ -5,7 +5,7 @@ A html5 canvas whiteboard to upload image, modify, and download the completed ar
 
 Interactive mode supports multiple user sharing the same whiteboard, using Server Sent Event in html5.
 
-Tested on Chrome, Firefox, Safari and support desktop and mobile devices. Note that IE is not supported. [Click to see example site] (http://josephu.github.io/interactive-painter)
+Tested on Chrome, Firefox, Safari and support desktop and mobile devices. Note that IE is not supported. [Click to see example site] (http://interactive-painter.herokuapp.com)
 
 Note
 ----
@@ -16,7 +16,9 @@ The tricky part is the synchronization issue for managing connection and data. C
 
 Browser support
 ---------------
+
 Server sent event: http://caniuse.com/eventsource
+
 Web socket: http://caniuse.com/websockets
 
 TODO
