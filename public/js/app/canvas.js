@@ -54,6 +54,9 @@ $(function(){
   $('#clear_canvas').on('click', function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
     clickX = [], clickY = [], clickDrag = [], clickColor = [], clickSize = [], clickTool = [];
+    if ( interactiveKey !== null ){
+      sync_remote(clickX, clickY, clickColor, clickSize, clickTool, clickDrag, interactiveKey, "clear");
+    }
   });
 
   $('#canvas').on( "touchstart mousedown", function(e){
@@ -80,7 +83,7 @@ $(function(){
   $('#canvas').on( "touchend mouseup", function(e){
     paint = false;
     if ( interactiveKey !== null ){
-      $.post( '/push/'+interactiveKey, { x:clickX, y:clickY, color: clickColor, size: clickSize, tool: clickTool, drag: clickDrag, key: interactiveKey }, 'json');
+      sync_remote(clickX, clickY, clickColor, clickSize, clickTool, clickDrag, interactiveKey, "merge");
     }
   });
 
@@ -127,6 +130,15 @@ $(function(){
       context.stroke();
       next = i+1;
     }
+  }
+
+  function sync_remote(clickX, clickY, clickColor, clickSize, clickTool, clickDrag, interactiveKey, action){
+    $.post( '/push/'+interactiveKey, {
+      data: {
+        x:clickX, y:clickY, color: clickColor, size: clickSize, tool: clickTool, drag: clickDrag
+      },
+      action: action
+    }, 'json');
   }
 });
 

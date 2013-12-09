@@ -26,8 +26,8 @@ TODO
 
 1. Button pressed effect
 2. Support interactive painting
-  - deploy to heroku
-  - update README
+  - Support push not to update itself (or add latency)
+  - Undo -> change protocol
 3. Integrational test
 4. Develop with (websocket and EM)[http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets]
 5. Play with (event source and EM)[http://dev.af83.com/2011/08/03/em-eventsource-an-eventmachine-client-for-server-sent-events.html]

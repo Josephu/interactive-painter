@@ -9,4 +9,5 @@ gem 'pry'
 
 group :test do
   gem 'rack-test'
+  gem 'mocha'
 end

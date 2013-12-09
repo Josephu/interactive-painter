@@ -56,6 +56,11 @@ button.icon:hover {
   -moz-opacity: 0.6;
   opacity: 0.6;
 }
+button.important-icon:hover {
+  filter: alpha(opacity=70);
+  -moz-opacity: 0.7;
+  opacity: 0.7;
+}
 input#image-to-upload {
   display: none;
 }
@@ -68,6 +73,7 @@ button[value=gray] { background-color: gray }
 button[value=black] { background-color: black }
 button[value=orange] { background-color: darkorange }
 button.icon { background-color: #eee; }
+button.important-icon { background-color: orange; }
 
 ul {
   padding: 0;
@@ -79,6 +85,7 @@ ul {
 }
 li {
   overflow: hidden;
+  background: gainsboro;
 }
 .circle {
   background-color: black;

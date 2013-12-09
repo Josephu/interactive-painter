@@ -5,7 +5,10 @@ GEM
     daemons (1.1.9)
     eventmachine (1.0.3)
     json (1.8.1)
+    metaclass (0.0.1)
     method_source (0.8.2)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
     pry (0.9.12.4)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -31,6 +34,7 @@ PLATFORMS
 
 DEPENDENCIES
   json
+  mocha
   pry
   rack-test
   sinatra

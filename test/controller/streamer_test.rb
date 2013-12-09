@@ -28,7 +28,9 @@ class StreamerTest < Test::Unit::TestCase
   end
 
   def test_push
-    post '/push/asecretkey'
+    ConnectionGroupManager.stubs(:send_data)
+
+    post '/push/asecretkey', action: "clear", data: {}
     assert last_response.ok?
     assert last_response.body.empty? == true
   end

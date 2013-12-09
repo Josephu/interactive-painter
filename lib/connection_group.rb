@@ -6,7 +6,7 @@ class ConnectionGroup
   def initialize(key)
     @key = key
     @connections = []
-    @data = nil
+    initialize_data
   end
 
   def add(connection)
@@ -17,8 +17,8 @@ class ConnectionGroup
     @connections.delete(connection)
   end
 
-  def insert_data(new_data)
-    if data
+  def update_data(action, new_data)
+    if action == "merge"
       queue_index = data["x"].length
       data["x"].length.times.each do |i|
         if data["x"][i] != new_data["x"][i]
@@ -27,12 +27,17 @@ class ConnectionGroup
         end
       end
       %w(x y color size tool drag).each { |attribute| data[attribute] += new_data[attribute][queue_index..-1] }
-    else
-      @data = new_data
+    else # default action: "clear"
+      initialize_data
     end
   end
 
   def empty?
     @connections.empty?
+  end
+
+  def initialize_data
+    @data = {}
+    %w(x y color size tool drag).each { |attribute| data[attribute] = [] }
   end
 end

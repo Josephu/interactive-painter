@@ -1,6 +1,6 @@
-require 'json'
-require 'sinatra/base'
-require 'pry'
+require 'bundler'
+Bundler.require :default
+
 require "#{File.dirname(__FILE__)}/lib/connection_group_manager"
 
 class Streamer < Sinatra::Base
@@ -38,7 +38,7 @@ class Streamer < Sinatra::Base
   post '/push/:key' do
     logger.info "#push: connection [ #{params[:key]} ]"
 
-    ConnectionGroupManager.send_data(params[:key], params)
+    ConnectionGroupManager.send_data(params[:key], params[:action], params[:data])
     status 200
   end
 end
