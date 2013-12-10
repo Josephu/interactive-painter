@@ -21,7 +21,7 @@ class ConnectionGroup
     if action == "merge"
       queue_index = data["x"].length
       data["x"].length.times.each do |i|
-        if data["x"][i] != new_data["x"][i]
+        if data["x"][i] != new_data["x"][i] && data["y"][i] != new_data["y"][i] && data["drag"][i] != new_data["drag"][i]
           queue_index = i
           break
         end

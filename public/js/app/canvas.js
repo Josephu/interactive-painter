@@ -12,12 +12,12 @@ $(function(){
   var interactiveKey = null;
 
   function addClick(x, y, dragging){
-    clickX.push(x);
-    clickY.push(y);
-    clickColor.push(curColor);
-    clickSize.push(curSize);
-    clickTool.push(curTool);
-    clickDrag.push(dragging);
+    clickX.push( x.toString() );
+    clickY.push( y.toString() );
+    clickColor.push( curColor );
+    clickSize.push( curSize.toString() );
+    clickTool.push( curTool );
+    clickDrag.push( dragging );
   }
 
   $('.tool').on('click', function(){
@@ -34,7 +34,7 @@ $(function(){
 
   $('#undo').on('click', function(){
     var i;
-    for(i = clickDrag.length-1; i >= 0 &&  clickDrag[i] != undefined; i--){
+    for(i = clickDrag.length-1; i >= 0 &&  clickDrag[i] != "0"; i--){
       clickX.pop();
       clickY.pop();
       clickDrag.pop();
@@ -62,7 +62,7 @@ $(function(){
   $('#canvas').on( "touchstart mousedown", function(e){
     if(e.type == "mousedown" || (e.type == "touchstart" && e.originalEvent.touches.length == 1) ){
       paint = true;
-      addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, "0");
       redraw();
     }
     else{
@@ -74,7 +74,7 @@ $(function(){
     if(paint){
       var pageX = isMobile.any() ? e.originalEvent.touches[0].pageX : e.pageX;
       var pageY = isMobile.any() ? e.originalEvent.touches[0].pageY : e.pageY;
-      addClick(pageX - this.offsetLeft, pageY - this.offsetTop, true);
+      addClick(pageX - this.offsetLeft, pageY - this.offsetTop, "1");
       redraw();
       e.preventDefault();
     }
@@ -112,7 +112,7 @@ $(function(){
 
     for(var i=0; i < clickX.length; i++) {
       context.beginPath();
-      if(clickDrag[i] && i){
+      if( ( clickDrag[i] == '1' ) && i){
         context.moveTo(clickX[i-1], clickY[i-1]);
       }else{
         context.moveTo(clickX[i]-1, clickY[i]-1);
