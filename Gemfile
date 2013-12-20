@@ -6,6 +6,7 @@ gem 'json'
 gem 'sinatra'
 gem 'thin'
 gem 'pry'
+gem 'jasmine'
 
 group :test do
   gem 'rack-test'

@@ -21,8 +21,15 @@ Server sent event: http://caniuse.com/eventsource
 
 Web socket: http://caniuse.com/websockets
 
+Run Tests
+---------
+
+rake test:full # run all tests
+rake jasmine:ci # run jasmine tests
+rake test # run unit test
+
 TODO
------
+----
 
 1. Button pressed effect
 2. Support interactive painting

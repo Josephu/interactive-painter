@@ -9,5 +9,7 @@ require.config({
 });
 
 require(['modernizr', 'jquery', 'underscore', 'mobile'], function(){
-  require(['app/canvas', 'app/file']);
+  require(['app/data_stack'], function(){
+    require(['app/canvas', 'app/file']);
+  });
 });

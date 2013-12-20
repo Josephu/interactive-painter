@@ -6,18 +6,14 @@ $(function(){
   var curTool = "marker";
   var curSize = 5;
 
-  var clickX = [], clickY = [], clickDrag = [], clickColor = [], clickSize = [], clickTool = [];
   var next = 0, paint = false;
 
   var interactiveKey = null;
 
+  var dataStack = new DataStack();
+
   function addClick(x, y, dragging){
-    clickX.push( x.toString() );
-    clickY.push( y.toString() );
-    clickColor.push( curColor );
-    clickSize.push( curSize.toString() );
-    clickTool.push( curTool );
-    clickDrag.push( dragging );
+    dataStack.push(x, y, curColor, curSize, curTool, dragging);
   }
 
   $('.tool').on('click', function(){
@@ -33,30 +29,14 @@ $(function(){
   });
 
   $('#undo').on('click', function(){
-    var i;
-    for(i = clickDrag.length-1; i >= 0 &&  clickDrag[i] != "0"; i--){
-      clickX.pop();
-      clickY.pop();
-      clickDrag.pop();
-      clickColor.pop();
-      clickSize.pop();
-      clickTool.pop();
-    }
-    clickX.pop();
-    clickY.pop();
-    clickDrag.pop();
-    clickColor.pop();
-    clickSize.pop();
-    clickTool.pop();
+    dataStack.pop();
     redraw();
   });
 
   $('#clear_canvas').on('click', function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-    clickX = [], clickY = [], clickDrag = [], clickColor = [], clickSize = [], clickTool = [];
-    if ( interactiveKey !== null ){
-      sync_remote(clickX, clickY, clickColor, clickSize, clickTool, clickDrag, interactiveKey, "clear");
-    }
+    dataStack.clear();
+    dataStack.sync();
   });
 
   $('#canvas').on( "touchstart mousedown", function(e){
@@ -82,9 +62,7 @@ $(function(){
 
   $('#canvas').on( "touchend mouseup", function(e){
     paint = false;
-    if ( interactiveKey !== null ){
-      sync_remote(clickX, clickY, clickColor, clickSize, clickTool, clickDrag, interactiveKey, "merge");
-    }
+    dataStack.sync();
   });
 
   $('#canvas').mouseleave(function(e){
@@ -92,16 +70,11 @@ $(function(){
   });
 
   if ( location.pathname.search(/^\/interactive\/.{10}$/) !== -1 ){
-    var interactiveKey = location.pathname.split('/')[2]
+    interactiveKey = location.pathname.split('/')[2];
+    dataStack.interactiveKey = interactiveKey;
     var es = new EventSource('/connect/' + interactiveKey );
     es.onmessage = function(e) {
-      image_data = $.parseJSON(e.data);
-      clickX = image_data["x"];
-      clickY = image_data["y"];
-      clickDrag = image_data["drag"];
-      clickColor = image_data["color"];
-      clickSize = image_data["size"];
-      clickTool = image_data["tool"];
+      dataStack.replace($.parseJSON(e.data));
       redraw();
     };
   }
@@ -110,35 +83,26 @@ $(function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
     context.lineJoin = "round";
 
-    for(var i=0; i < clickX.length; i++) {
+    for(var i=0; i < dataStack.clickX.length; i++) {
       context.beginPath();
-      if( ( clickDrag[i] == '1' ) && i){
-        context.moveTo(clickX[i-1], clickY[i-1]);
+      if( ( dataStack.clickDrag[i] == '1' ) && i){
+        context.moveTo(dataStack.clickX[i-1], dataStack.clickY[i-1]);
       }else{
-        context.moveTo(clickX[i]-1, clickY[i]-1);
+        context.moveTo(dataStack.clickX[i]-1, dataStack.clickY[i]-1);
       }
-      context.lineTo(clickX[i], clickY[i]);
+      context.lineTo(dataStack.clickX[i], dataStack.clickY[i]);
       context.closePath();
-      if(clickTool[i] == 'eraser'){
+      if(dataStack.clickTool[i] == 'eraser'){
         context.strokeStyle = "white";
-        context.lineWidth = clickSize[i]+1;
+        context.lineWidth = dataStack.clickSize[i]+1;
       }
       else{
-        context.strokeStyle = clickColor[i];
-        context.lineWidth = clickSize[i];
+        context.strokeStyle = dataStack.clickColor[i];
+        context.lineWidth = dataStack.clickSize[i];
       }
       context.stroke();
       next = i+1;
     }
-  }
-
-  function sync_remote(clickX, clickY, clickColor, clickSize, clickTool, clickDrag, interactiveKey, action){
-    $.post( '/push/'+interactiveKey, {
-      data: {
-        x:clickX, y:clickY, color: clickColor, size: clickSize, tool: clickTool, drag: clickDrag
-      },
-      action: action
-    }, 'json');
   }
 });
 
