@@ -42,7 +42,12 @@
           <a id="download_image" title="Download image" ><button class="icon fa fa-download" ></button></a>
           <div class="bar"></div>
           <% if random_key %>
-            <a href="interactive/<%= random_key %>" ><button id="interactive" class="important-icon fa fa-users" title="Interactive"></button></a>
+            <a href="/interactive/<%= random_key %>" ><button id="interactive" class="important-icon fa fa-users" title="Interactive"></button></a>
+          <% else %>
+            <a href="/" ><button class="important-icon fa fa-user" title="Single user"></button></a>
+            <% if current_key %>
+              <a href="/interactive/<%= current_key %>" target="_blank"><button id="test_interactive" class="fa fa-users" title="Interactive"></button></a>
+            <% end %>
           <% end %>
         </li>
       </ul>

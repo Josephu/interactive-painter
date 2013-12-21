@@ -7,9 +7,9 @@ $(function(){
   $("#find_file").on('click', function() {
     $("#image-to-upload").trigger('click');
   });
-  $("#image-to-upload").on('change', function() {
-    uploadImage( document.getElementById("image-to-upload").files[0] );
-  });
+  //$("#image-to-upload").on('change', function() {
+  //  uploadImage( document.getElementById("image-to-upload").files[0] );
+  //});
   $('#download_image').on('click', function(){
     var canvas = document.getElementById('canvas');
     this.href = canvas.toDataURL().replace("image/png", "image/octet-stream");
@@ -41,7 +41,7 @@ $(function(){
     var MAX_HEIGHT = 480;
     var width = img.width;
     var height = img.height;
-     
+
     if (width > height) {
       if (width > MAX_WIDTH) {
           height *= MAX_WIDTH / width;
@@ -56,8 +56,8 @@ $(function(){
     return {width: width, height: height};
   }
 
-  function loadInitialImage(){
-    uploadImage( '/img/image.png' );
-  }
-  loadInitialImage();
+  //function loadInitialImage(){
+  //  uploadImage( '/img/image.png' );
+  //}
+  //loadInitialImage();
 });

@@ -11,4 +11,6 @@ gem 'jasmine'
 group :test do
   gem 'rack-test'
   gem 'mocha'
+  gem 'capybara'
+  gem 'rmagick'
 end

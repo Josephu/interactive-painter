@@ -2,3 +2,4 @@
 .ruby-version
 .tags
 .tags_sorted_by_file
+./spec/images/test/*.png

@@ -14,12 +14,12 @@ class Streamer < Sinatra::Base
   end
 
   get '/' do
-    random_key = rand(36**10).to_s(36) 
+    random_key = rand(36**10).to_s(36)
     erb :index, locals: { random_key: random_key }
   end
 
   get '/interactive/:key' do
-    erb :index, locals: { random_key: nil }
+    erb :index, locals: { random_key: nil, current_key: (ENV["RACK_ENV"] != "production") ? params[:key] : nil }
   end
 
   get '/connect/:key', provides: 'text/event-stream' do
