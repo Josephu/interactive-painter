@@ -25,7 +25,9 @@ Run Tests
 ---------
 
 rake test:full # run all tests
+
 rake jasmine:ci # run jasmine tests
+
 rake test # run unit test
 
 TODO
@@ -34,11 +36,11 @@ TODO
 1. Button pressed effect
 2. Support interactive painting
   - Support push not to update itself (or add latency)
-  - Undo -> change protocol
-3. Integrational test
-4. Develop with (websocket and EM)[http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets]
-5. Play with (event source and EM)[http://dev.af83.com/2011/08/03/em-eventsource-an-eventmachine-client-for-server-sent-events.html]
-6. Javascript test with Jasmine
+  - Undo => change protocol
+  - When 2 people draw at the same time, each line can be separated
+3. Use cucumber
+4. Develop with [websocket and EM](http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets)
+5. Play with [event source and EM](http://dev.af83.com/2011/08/03/em-eventsource-an-eventmachine-client-for-server-sent-events.html)
 
 Feedback
 -----------

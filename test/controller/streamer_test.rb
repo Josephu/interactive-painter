@@ -18,7 +18,7 @@ class StreamerTest < Test::Unit::TestCase
     get '/interactive/asecretkey'
     assert last_response.ok?
     assert last_response.body.include? "<h1>Paint Ur Image</h1>"
-    assert last_response.body.include?("interactive") ==  false   
+    assert last_response.body.include?("interactive") == true
   end
 
   def test_connect
