@@ -13,4 +13,6 @@ group :test do
   gem 'mocha'
   gem 'capybara'
   gem 'rmagick'
+  gem 'cucumber'
+  gem 'cucumber-sinatra'
 end
