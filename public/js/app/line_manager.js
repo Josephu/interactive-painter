@@ -49,10 +49,14 @@ function LineManager() {
     }
   };
   this.mergeLines = function (data) {
-    _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
-      data[attr].push(_.last(click[attr]));
-      click[attr] = data[attr];
-    });
+    if(data.x.length !== 0){
+      _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
+        data[attr].push(_.last(click[attr]));
+        click[attr] = data[attr];
+      });
+    } else {
+      resetClick();
+    }
   };
   this.undoLine = function () {
     _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
