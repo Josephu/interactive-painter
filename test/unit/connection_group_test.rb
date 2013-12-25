@@ -46,19 +46,23 @@ class ConnectionGroupTest < Test::Unit::TestCase
       "tool" => ["t","v"], "drag" => ["e","f"]
       }
     data_result1 = {
-      "x" => ["x","y", "z"], "y" => ["y","z","a"],
-      "color" => ["c","d","e"], "size" => ["s","t","u"],
-      "tool" => ["t","u","v"], "drag" => ["e","e","f"]
-    }
+      "x" => [["x","y"]],
+      "y" => [["y","z"]],
+      "color" => [["c","d"]],
+      "size" => [["s","t"]],
+      "tool" => [["t","u"]],
+      "drag" => [["e","e"]]
+      }
     data_result2 = {
-      "x" => ["x","y", "z", "z"], "y" => ["y","z","a","a"],
-      "color" => ["c","d","e","e"], "size" => ["s","t","u","u"],
-      "tool" => ["t","u","v","v"], "drag" => ["e","e","f","f"]
+      "x" => [["x","y"], ["x", "z"]],
+      "y" => [["y","z"], ["y","a"]],
+      "color" => [["c","d"],["c","e"]],
+      "size" => [["s","t"],["s","u"]],
+      "tool" => [["t","u"],["t", "v"]],
+      "drag" => [["e","e"],["e", "f"]]
     }
     group = ConnectionGroup.new("some_key")
     group.update_data("merge", data1)
-    assert_equal group.data, data1
-    group.update_data("merge", data2)
     assert_equal group.data, data_result1
     group.update_data("merge", data2)
     assert_equal group.data, data_result2

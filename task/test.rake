@@ -11,6 +11,6 @@ namespace :test do
   task :full do
     Rake::Task["test"].invoke
     Rake::Task["jasmine:ci"].invoke
-    Rake::Task["spec"].invoke
+    # Rake::Task["spec"].invoke
   end
 end

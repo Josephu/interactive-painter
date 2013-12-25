@@ -30,7 +30,7 @@ class ConnectionGroupManager
 
   # Given server send data to connections
   # Insert data to connection group and send data to all connections
-  def self.send_data(key, action, data)
+  def self.send_data(key, action, data = nil)
     connection_group = @@connection_groups[ key ]
     update_data(key, action, data)
     connection_group.connections.each { |connection| connection << "data: #{connection_group.data.to_json}\n\n" }
@@ -39,7 +39,7 @@ class ConnectionGroupManager
   # Given server receive data from connection
   # When connection group with "A" key exists, insert data to this group
   # When connection group with "A" key does not exist, create this group and insert data to this group 
-  def self.update_data(key, action, data)
+  def self.update_data(key, action, data = nil)
     @@insert_data_semaphore.synchronize {
       @@connection_groups[ key ] = ConnectionGroup.new(key) unless @@connection_groups[ key ]
       @@connection_groups[ key ].update_data(action, data)

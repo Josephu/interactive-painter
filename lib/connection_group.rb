@@ -17,16 +17,9 @@ class ConnectionGroup
     @connections.delete(connection)
   end
 
-  def update_data(action, new_data)
+  def update_data(action, new_data = nil)
     if action == "merge"
-      queue_index = data["x"].length
-      data["x"].length.times.each do |i|
-        if data["x"][i] != new_data["x"][i] && data["y"][i] != new_data["y"][i] && data["drag"][i] != new_data["drag"][i]
-          queue_index = i
-          break
-        end
-      end
-      %w(x y color size tool drag).each { |attribute| data[attribute] += new_data[attribute][queue_index..-1] }
+      %w(x y color size tool drag).each { |attribute| data[attribute] << new_data[attribute] }
     else # default action: "clear"
       initialize_data
     end

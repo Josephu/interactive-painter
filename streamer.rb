@@ -38,7 +38,14 @@ class Streamer < Sinatra::Base
   post '/push/:key' do
     logger.info "#push: connection [ #{params[:key]} ]"
 
-    ConnectionGroupManager.send_data(params[:key], params[:action], params[:data])
+    ConnectionGroupManager.send_data(params[:key], "merge", params[:data])
+    status 200
+  end
+
+  post '/clear/:key' do
+    logger.info "#push: connection [ #{params[:key]} ]"
+
+    ConnectionGroupManager.send_data(params[:key], "clear")
     status 200
   end
 end

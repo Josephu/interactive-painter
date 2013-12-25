@@ -10,10 +10,14 @@ $(function(){
 
   var interactiveKey = null;
 
-  var dataStack = new DataStack();
+  var lineManager = new LineManager();
 
   function addClick(x, y, dragging){
-    dataStack.push(x, y, curColor, curSize, curTool, dragging);
+    if(dragging === "0"){
+      lineManager.startLine(x, y, curColor, curSize, curTool, dragging);
+    } else {
+      lineManager.continueLine(x, y, curColor, curSize, curTool, dragging);
+    }
   }
 
   $('.tool').on('click', function(){
@@ -29,14 +33,13 @@ $(function(){
   });
 
   $('#undo').on('click', function(){
-    dataStack.pop();
+    lineManager.undoLine();
     redraw();
   });
 
   $('#clear_canvas').on('click', function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-    dataStack.clear();
-    dataStack.sync();
+    lineManager.clearAll();
   });
 
   $('#canvas').on( "touchstart mousedown", function(e){
@@ -62,7 +65,7 @@ $(function(){
 
   $('#canvas').on( "touchend mouseup", function(e){
     paint = false;
-    dataStack.sync();
+    lineManager.endLine();
   });
 
   $('#canvas').mouseleave(function(e){
@@ -71,10 +74,10 @@ $(function(){
 
   if ( location.pathname.search(/^\/interactive\/.{10}$/) !== -1 ){
     interactiveKey = location.pathname.split('/')[2];
-    dataStack.interactiveKey = interactiveKey;
+    lineManager.interactiveKey = interactiveKey;
     var es = new EventSource('/connect/' + interactiveKey );
     es.onmessage = function(e) {
-      dataStack.replace($.parseJSON(e.data));
+      lineManager.mergeLines($.parseJSON(e.data));
       redraw();
     };
   }
@@ -83,22 +86,30 @@ $(function(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
     context.lineJoin = "round";
 
-    for(var i=0; i < dataStack.clickX.length; i++) {
+    line_data = lineManager.getLines();
+    var clickX = line_data["x"];
+    var clickY = line_data["y"];
+    var clickColor = line_data["color"];
+    var clickSize = line_data["size"];
+    var clickTool = line_data["tool"];
+    var clickDrag = line_data["drag"];
+
+    for(var i=0; i < clickX.length; i++) {
       context.beginPath();
-      if( ( dataStack.clickDrag[i] == '1' ) && i){
-        context.moveTo(dataStack.clickX[i-1], dataStack.clickY[i-1]);
+      if( ( clickDrag[i] == '1' ) && i){
+        context.moveTo(clickX[i-1], clickY[i-1]);
       }else{
-        context.moveTo(dataStack.clickX[i]-1, dataStack.clickY[i]-1);
+        context.moveTo(clickX[i]-1, clickY[i]-1);
       }
-      context.lineTo(dataStack.clickX[i], dataStack.clickY[i]);
+      context.lineTo(clickX[i], clickY[i]);
       context.closePath();
-      if(dataStack.clickTool[i] == 'eraser'){
+      if(clickTool[i] == 'eraser'){
         context.strokeStyle = "white";
-        context.lineWidth = dataStack.clickSize[i]+1;
+        context.lineWidth = clickSize[i]+1;
       }
       else{
-        context.strokeStyle = dataStack.clickColor[i];
-        context.lineWidth = dataStack.clickSize[i];
+        context.strokeStyle = clickColor[i];
+        context.lineWidth = clickSize[i];
       }
       context.stroke();
       next = i+1;

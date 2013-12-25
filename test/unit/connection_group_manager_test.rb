@@ -21,9 +21,15 @@ class ConnectionGroupManagerTest < Test::Unit::TestCase
       "color" => ["c","d"], "size" => ["s","t"],
       "tool" => ["t","u"], "drag" => ["e","e"]
       }
+
+    result = {
+      "x" => [["x","y"]], "y" => [["y","z"]],
+      "color" => [["c","d"]], "size" => [["s","t"]],
+      "tool" => [["t","u"]], "drag" => [["e","e"]]
+      }
     ConnectionGroupManager.add_connection("update_key", "connection 1")
     ConnectionGroupManager.update_data("update_key", "merge", data)
-    assert_equal ConnectionGroupManager.connection_groups["update_key"].data, data
+    assert_equal ConnectionGroupManager.connection_groups["update_key"].data, result
   end
 
   def test_update_data_to_unexist_connection_group
@@ -32,9 +38,15 @@ class ConnectionGroupManagerTest < Test::Unit::TestCase
       "color" => ["c","d"], "size" => ["s","t"],
       "tool" => ["t","u"], "drag" => ["e","e"]
       }
+
+    result = {
+      "x" => [["x","y"]], "y" => [["y","z"]],
+      "color" => [["c","d"]], "size" => [["s","t"]],
+      "tool" => [["t","u"]], "drag" => [["e","e"]]
+      }
     ConnectionGroupManager.add_connection("unexist_key", "connection 1")
     ConnectionGroupManager.update_data("unexist_key", "merge", data)
-    assert_equal ConnectionGroupManager.connection_groups["unexist_key"].data, data
+    assert_equal ConnectionGroupManager.connection_groups["unexist_key"].data, result
     assert_equal ConnectionGroupManager.connection_groups["unexist_key"].class, ConnectionGroup
   end
 
@@ -44,11 +56,17 @@ class ConnectionGroupManagerTest < Test::Unit::TestCase
       "color" => ["c","d"], "size" => ["s","t"],
       "tool" => ["t","u"], "drag" => ["e","e"]
       }
+
+    result = {
+      "x" => [["x","y"]], "y" => [["y","z"]],
+      "color" => [["c","d"]], "size" => [["s","t"]],
+      "tool" => [["t","u"]], "drag" => [["e","e"]]
+      }
     ConnectionGroupManager.add_connection("send_key", ["connection 1"])
     ConnectionGroupManager.add_connection("send_key", ["connection 2"])
     ConnectionGroupManager.send_data("send_key", "merge", data)
     ConnectionGroupManager.connection_groups["send_key"].connections.each do | connection |
-      assert_equal connection.last.include?(data.to_json), true
+      assert_equal connection.last.include?(result.to_json), true
     end
   end
 
