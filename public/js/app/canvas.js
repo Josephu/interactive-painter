@@ -22,14 +22,23 @@ $(function(){
 
   $('.tool').on('click', function(){
     curTool = $(this).val();
+    $(".tool").removeClass("press");
+    $(this).addClass("press");
   });
 
   $('.color').on('click', function(){
     curColor = colors[ $(this).val() ];
+    $(".color").removeClass("press");
+    $(this).addClass("press");
+    curTool = "marker";
+    $(".tool").removeClass("press");
+    $("button[value=marker]").addClass("press");
   });
 
   $('.size').on('click', function(){
     curSize = $(this).val();
+    $(".size").removeClass("press");
+    $(this).addClass("press");
   });
 
   $('#undo').on('click', function(){

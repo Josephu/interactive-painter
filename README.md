@@ -33,7 +33,7 @@ rake test # run unit test
 TODO
 ----
 
-1. Button pressed effect
+1. Add database support? Add login management?
 2. Develop with [websocket and EM](http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets)
 3. Play with [event source and EM](http://dev.af83.com/2011/08/03/em-eventsource-an-eventmachine-client-for-server-sent-events.html)
 
