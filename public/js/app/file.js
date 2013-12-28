@@ -4,12 +4,12 @@ $(function(){
     uploadImage( e.dataTransfer.files[0] );
     return false;
   };
-  $("#find_file").on('click', function() {
-    $("#image-to-upload").trigger('click');
-  });
-  //$("#image-to-upload").on('change', function() {
-  //  uploadImage( document.getElementById("image-to-upload").files[0] );
-  //});
+  // $("#find_file").on('click', function() {
+  //   $("#image-to-upload").trigger('click');
+  // });
+  // $("#image-to-upload").on('change', function() {
+  //   uploadImage( document.getElementById("image-to-upload").files[0] );
+  // });
   $('#download_image').on('click', function(){
     var canvas = document.getElementById('canvas');
     this.href = canvas.toDataURL().replace("image/png", "image/octet-stream");
