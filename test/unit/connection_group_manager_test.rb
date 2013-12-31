@@ -10,8 +10,11 @@ class ConnectionGroupManagerTest < Test::Unit::TestCase
   end
 
   def test_delete_connection
-    ConnectionGroupManager.add_connection("delete_key", "connection 1")
-    ConnectionGroupManager.delete_connection("connection 1")
+    connection = "connection 1"
+    connection.stubs("<<")
+    ConnectionGroupManager.add_connection("delete_key", connection)
+
+    ConnectionGroupManager.delete_connection(connection)
     assert_equal ConnectionGroupManager.connection_groups["delete_key"], nil
   end
 

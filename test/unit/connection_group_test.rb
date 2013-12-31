@@ -79,4 +79,41 @@ class ConnectionGroupTest < Test::Unit::TestCase
     assert_equal group.data, data_result
   end
 
+  def test_new_storage
+    Mongoid.purge!
+    ConnectionStorage.expects(:create).times(1)
+    ConnectionGroup.new("jimmy_wong")
+  end
+
+  def test_update_storage_using_merge
+    Mongoid.purge!
+    data1 = {
+      "x" => ["x","y"], "y" => ["y","z"],
+      "color" => ["c","d"], "size" => ["s","t"],
+      "tool" => ["t","u"], "drag" => ["e","e"]
+      }
+    data_result1 = {
+      "x" => [["x","y"]],
+      "y" => [["y","z"]],
+      "color" => [["c","d"]],
+      "size" => [["s","t"]],
+      "tool" => [["t","u"]],
+      "drag" => [["e","e"]]
+      }
+    group = ConnectionGroup.new("jimmy_wong")
+    group.update_data("merge", data1)
+    assert_equal ConnectionStorage.find_by_key("jimmy_wong").first.data, data_result1
+  end
+
+  def test_update_storage_using_clear
+    Mongoid.purge!
+    data_result = {
+      "x" => [], "y" => [],
+      "color" => [], "size" => [],
+      "tool" => [], "drag" => []
+      }
+    group = ConnectionGroup.new("jimmy_wong")
+    group.update_data( {}, "clear")
+    assert_equal ConnectionStorage.find_by_key("jimmy_wong").first.data, data_result
+  end
 end

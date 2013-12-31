@@ -1,7 +1,11 @@
 require 'bundler'
 Bundler.require :default
 
+require "sinatra/reloader" if development?
+
 require "#{File.dirname(__FILE__)}/lib/connection_group_manager"
+
+Mongoid.load!("#{File.dirname(__FILE__)}/config/mongoid.yml")
 
 class Streamer < Sinatra::Base
   set :root, File.dirname(__FILE__)

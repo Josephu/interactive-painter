@@ -14,6 +14,7 @@ class ConnectionGroupManager
       @@connection_groups[ key ] = ConnectionGroup.new(key) unless @@connection_groups[ key ]
       @@connection_groups[ key ].add(connection)
     }
+    connection << "data: #{@@connection_groups[ key ].data.to_json}\n\n"
     puts "[Add][#{key}] connections: #{@@connection_groups[ key ].connections.count.to_s}\n"
   end
 

@@ -4,7 +4,10 @@ ruby '1.9.3'
 
 gem 'json'
 gem 'sinatra'
+gem 'sinatra-contrib'
 gem 'thin'
+gem "mongoid", "~> 3.0.0"
+gem 'bson_ext'
 
 gem 'pry'
 gem 'pry-debugger'
@@ -18,6 +21,6 @@ group :test do
   gem 'selenium-webdriver'
   gem 'rmagick'
   gem 'jasmine', '~> 1.3'
-  gem 'cucumber'
-  gem 'cucumber-sinatra'
+  #gem 'cucumber'
+  #gem 'cucumber-sinatra'
 end
