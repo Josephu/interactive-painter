@@ -40,10 +40,19 @@ rake test # run unit test
 rspec ./spec/request # run capybara integration test
 ```
 
+### Precompile Assets
+
+```
+rake asset:precompile
+```
+
 ### TODO
 
-1. Maybe add login management
-2. Develop with [websocket and EM](http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets)
+1. Support offline feature for single user mode
+2. Integrate [sprocket into sinatra](https://passcod.name/2012/06/03/sprockets-on-sinatra-and-heroku.html)
+3. Develop with [websocket and EM](http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets)
+4. Login support?
+5. Package.json to manage js packages?
 
 ### Feedback
 

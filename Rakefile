@@ -3,7 +3,8 @@ begin
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
   load 'task/test.rake'
-  require 'rspec/core/rake_task'
+  load 'task/asset.rake'
+  # require 'rspec/core/rake_task'
   # desc "Run all specs in spec directory"
   # RSpec::Core::RakeTask.new do |t|
   #   t.rspec_opts = ["-r ./spec/spec_helper.rb"]
