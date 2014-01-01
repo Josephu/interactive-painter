@@ -1,28 +1,22 @@
 test:
   sessions:
     default:
-      database: interactive_painter_test
-      hosts:
-        - localhost:27017
+      uri: mongodb://localhost:27017/interactive_painter_test
   options:
     allow_dynamic_fields: false
     raise_not_found_error: false
 development:
   sessions:
     default:
-      database: interactive_painter
-      hosts:
-        - localhost:27017
+      uri: mongodb://localhost:27017/interactive_painter
   options:
     allow_dynamic_fields: false
     raise_not_found_error: false
 production:
   sessions:
     default:
-      database: ENV['MONGOLAB_DB']
-      hosts:
-        - ENV['MONGOLAB_URI']
+      uri: <%= ENV['MONGOLAB_URI'] %>
   options:
     allow_dynamic_fields: false
     raise_not_found_error: false
-
+    skip_version_check: true
