@@ -13,6 +13,10 @@ gem 'pry'
 gem 'pry-debugger'
 gem 'pry-stack_explorer'
 
+group :customize do
+  gem 'rack-offline'
+end
+
 group :test do
   gem 'rspec'
   gem 'rack-test'

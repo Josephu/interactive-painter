@@ -5,6 +5,8 @@ require "sinatra/reloader" if development?
 
 require "#{File.dirname(__FILE__)}/lib/connection_group_manager"
 
+require "rack/offline" if !test?
+
 Mongoid.load!("#{File.dirname(__FILE__)}/config/mongoid.yml")
 
 class Streamer < Sinatra::Base

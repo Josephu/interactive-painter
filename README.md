@@ -46,13 +46,20 @@ rspec ./spec/request # run capybara integration test
 rake asset:precompile
 ```
 
+### Special Features
+
+Support offline usage for single user mode
+
 ### TODO
 
-1. Support offline feature for single user mode
-2. Integrate [sprocket into sinatra](https://passcod.name/2012/06/03/sprockets-on-sinatra-and-heroku.html)
-3. Develop with [websocket and EM](http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets)
-4. Login support?
-5. Package.json to manage js packages?
+* Support local storage for javascript content in single user mode
+* Github icon (fork me on github)
+* Integrate [sprocket into sinatra](https://passcod.name/2012/06/03/sprockets-on-sinatra-and-heroku.html)
+* Translation
+* Preserve content switching between single user / multiple user mode
+* Develop with [websocket and EM](http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets)
+* Login support?
+* Package.json to manage js packages?
 
 ### Feedback
 

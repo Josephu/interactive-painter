@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+<% if random_key %>
+  <html manifest="/application.manifest">
+<% else %>
+  <html>
+<% end %>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">

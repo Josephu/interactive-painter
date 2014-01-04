@@ -68,6 +68,7 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     rack (1.5.2)
+    rack-offline (0.6.4)
     rack-protection (1.5.1)
       rack
     rack-test (0.6.2)
@@ -122,6 +123,7 @@ DEPENDENCIES
   pry
   pry-debugger
   pry-stack_explorer
+  rack-offline
   rack-test
   rmagick
   rspec
