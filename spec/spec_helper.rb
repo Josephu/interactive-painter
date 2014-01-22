@@ -7,12 +7,13 @@ require 'rmagick'
 require_relative "../streamer.rb"
 
 Capybara.default_driver = :selenium
-Capybara.app = Streamer
 
 Capybara.server do |app, port|
   require 'rack/handler/thin'
   Rack::Handler::Thin.run(app, :Port => port)
 end
+
+Capybara.app = eval "Rack::Builder.new {#{File.read('./config.ru')}}"
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods

@@ -17,6 +17,13 @@ group :customize do
   gem 'rack-offline'
 end
 
+group :asset do
+  gem 'sprockets'
+  gem 'sass'
+  gem 'compass'
+  gem 'uglifier'
+end
+
 group :test do
   gem 'rspec'
   gem 'rack-test'

@@ -5,15 +5,26 @@ require "sinatra/reloader" if development?
 
 require "#{File.dirname(__FILE__)}/lib/connection_group_manager"
 
-require "rack/offline" if !test?
-
 Mongoid.load!("#{File.dirname(__FILE__)}/config/mongoid.yml")
+
+Bundler.require :customize if !test?
+
+Bundler.require :asset
 
 class Streamer < Sinatra::Base
   set :root, File.dirname(__FILE__)
   set :public_folder, Proc.new { File.join(root, "public") }
   set :views, Proc.new { File.join(root, "views") }
   set :server, "thin"
+  set :asset, Proc.new {
+    Sprockets::Environment.new do |environment|
+      environment.append_path 'asset'
+      environment.append_path File.join(Gem.loaded_specs['compass'].full_gem_path, 'frameworks', 'compass','stylesheets')
+    end
+  }
+  set :manifest, Proc.new { YAML.load(File.open("#{public_folder}/asset/manifest.yml")) }
+  set :javascript_tag, Proc.new {"/asset/"+((ENV["RACK_ENV"] == "production") ? settings.manifest["assets"]["js/application.js"] : "js/application-#{settings.asset.find_asset("js/application.js").digest}.js")}
+  set :stylesheet_tag, Proc.new {"/asset/"+((ENV["RACK_ENV"] == "production") ? settings.manifest["assets"]["stylesheet/application.css"] : "stylesheet/application-#{settings.asset.find_asset("stylesheet/application.css").digest}.css")}
 
   def timestamp
     Time.now.strftime("%H:%M:%S")

@@ -37,13 +37,13 @@ rake jasmine:ci # run jasmine tests
 
 rake test # run unit test
 
-rspec ./spec/request # run capybara integration test
+rake spec # run capybara integration test
 ```
 
 ### Precompile Assets
 
 ```
-rake asset:precompile
+rake assets:precompile
 ```
 
 ### Special Features
