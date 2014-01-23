@@ -1,13 +1,5 @@
-function LineManager() {
+function LineManager(interactiveKey) {
   var click = {};
-
-  var resetClick = function() {
-    _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
-      click[attr] = [];
-    });
-  }
-
-  resetClick();
 
   this.interactiveKey = null;
 
@@ -39,10 +31,15 @@ function LineManager() {
           drag: _.last(click.drag)
         }
       }, 'json');
+    } else {
+      _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
+        localStorage.setItem(attr, JSON.stringify(click[attr]));
+      });
     }
   };
   this.clearAll = function () {
     resetClick();
+    resetLocalStorage();
 
     if (this.interactiveKey !== null) {
       $.post('/clear/' + this.interactiveKey, 'json');
@@ -77,4 +74,32 @@ function LineManager() {
     });
     return data;
   };
+
+  function resetClick() {
+    _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
+      click[attr] = [];
+    });
+  }
+
+  function resetLocalStorage() {
+    _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
+      localStorage.setItem(attr, JSON.stringify([]));
+    });
+  }
+
+  function initialize (self) {
+    if(interactiveKey === undefined){
+      if(localStorage.getItem("x") !== null){
+        _.each(["x", "y", "color", "size", "tool", "drag"], function (attr) {
+          click[attr] = JSON.parse(localStorage.getItem(attr)); // Access local storage for single user mode
+        });
+      } else {
+        resetClick();
+      }
+    } else {
+      self.interactiveKey = interactiveKey;
+    }
+  }
+
+  initialize(this);
 }

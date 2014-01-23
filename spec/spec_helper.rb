@@ -37,7 +37,7 @@ def expect_image_match(name)
   img1 = Magick::Image.read("./spec/images/result/#{name}.png")
   img2 = Magick::Image.read("./spec/images/test/#{name}.png")
   diff_img, diff_metric = img1[0].compare_channel( img2[0], Magick::MeanSquaredErrorMetric )
-  expect(diff_metric).to be < 0.01
+  expect(diff_metric).to be < 0.000000000001
 end
 
 def save_image_match(name)

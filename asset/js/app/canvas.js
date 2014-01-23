@@ -9,16 +9,7 @@ $(function(){
   var next = 0, paint = false;
 
   var interactiveKey = null;
-
-  var lineManager = new LineManager();
-
-  function addClick(x, y, dragging){
-    if(dragging === "0"){
-      lineManager.startLine(x, y, curColor, curSize, curTool, dragging);
-    } else {
-      lineManager.continueLine(x, y, curColor, curSize, curTool, dragging);
-    }
-  }
+  var lineManager = null;
 
   $('.tool').on('click', function(){
     curTool = $(this).val();
@@ -81,16 +72,6 @@ $(function(){
     paint = false;
   });
 
-  if ( location.pathname.search(/^\/interactive\/.{10}$/) !== -1 ){
-    interactiveKey = location.pathname.split('/')[2];
-    lineManager.interactiveKey = interactiveKey;
-    var es = new EventSource('/connect/' + interactiveKey );
-    es.onmessage = function(e) {
-      lineManager.mergeLines($.parseJSON(e.data));
-      redraw();
-    };
-  }
-
   function redraw(){
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.fillStyle = "#ffffff";
@@ -127,5 +108,30 @@ $(function(){
       next = i+1;
     }
   }
+
+  function addClick(x, y, dragging){
+    if(dragging === "0"){
+      lineManager.startLine(x, y, curColor, curSize, curTool, dragging);
+    } else {
+      lineManager.continueLine(x, y, curColor, curSize, curTool, dragging);
+    }
+  }
+
+  function initialize(){
+    if ( location.pathname.search(/^\/interactive\/.{10}$/) !== -1 ){
+      interactiveKey = location.pathname.split('/')[2];
+      lineManager = new LineManager(interactiveKey);
+      var es = new EventSource('/connect/' + interactiveKey );
+      es.onmessage = function(e) {
+        lineManager.mergeLines($.parseJSON(e.data));
+        redraw();
+      };
+    } else {
+      lineManager = new LineManager();
+    }
+    redraw();
+  }
+
+  initialize();
 });
 

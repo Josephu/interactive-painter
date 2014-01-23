@@ -7,6 +7,10 @@ describe "Single user mode:" do
     visit '/'
   end
 
+  after(:each) do
+    page.find("#clear_canvas").click
+  end
+
   it "expect responsive showing title" do
     expect(page).to have_no_content('Paint Ur Image')
 

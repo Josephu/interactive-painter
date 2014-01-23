@@ -23,7 +23,7 @@ describe "Interactive mode:" do
     # FF default behaviour open new window will not switch to it,
     # therefore need to switch to new tab to verify
     browser.switch_to.window(@new_tab)
-    expect_image_match("draw_lines")
+    expect_image_match("draw_lines_interactive")
   end
 
   it "draw dots" do
@@ -33,7 +33,7 @@ describe "Interactive mode:" do
     page.find("canvas").draw_line(100, 200, 200, 200)
 
     browser.switch_to.window(@new_tab)
-    expect_image_match("draw_dots")
+    expect_image_match("draw_dots_interactive")
   end
 
   it "multiple colors" do
@@ -43,7 +43,7 @@ describe "Interactive mode:" do
     end
 
     browser.switch_to.window(@new_tab)
-    expect_image_match("multiple_colors")
+    expect_image_match("multiple_colors_interactive")
   end
 
   it "clear canvas" do
@@ -52,7 +52,7 @@ describe "Interactive mode:" do
     page.find("#clear_canvas").click
 
     browser.switch_to.window(@new_tab)
-    expect_image_match("clear_canvas")
+    expect_image_match("clear_canvas_interactive")
   end
 
   it "erase canvas" do
@@ -65,7 +65,7 @@ describe "Interactive mode:" do
     page.find("canvas").draw_line(40, 40, 40, 80)
 
     browser.switch_to.window(@new_tab)
-    expect_image_match("erase_canvas")
+    expect_image_match("erase_canvas_interactive")
   end
 
   it "change size" do
@@ -75,6 +75,6 @@ describe "Interactive mode:" do
     end
 
     browser.switch_to.window(@new_tab)
-    expect_image_match("change_size")
+    expect_image_match("change_size_interactive")
   end
 end
