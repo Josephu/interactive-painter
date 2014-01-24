@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe "Single user mode:" do
-  let(:browser) {page.driver.browser}
   before(:each) do
-    browser.manage.window.resize_to(1024,768)
+    @browser = page.driver.browser
+    @browser.manage.window.resize_to(1024,768)
     visit '/'
   end
 
@@ -14,7 +14,7 @@ describe "Single user mode:" do
   it "expect responsive showing title" do
     expect(page).to have_no_content('Paint Ur Image')
 
-    browser.manage.window.resize_to(1025,768)
+    @browser.manage.window.resize_to(1025,768)
     expect(page).to have_content('Paint Ur Image')
   end
 

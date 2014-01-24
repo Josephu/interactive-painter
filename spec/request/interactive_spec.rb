@@ -1,13 +1,19 @@
 require 'spec_helper'
 
 describe "Interactive mode:" do
-  let(:browser) {page.driver.browser}
-  before :each do
-    visit "/interactive/#{rand(36**10).to_s(36)}"
-    browser.manage.window.resize_to(1024,768)
-    @tab = browser.window_handle
+  before :all do
+    @browser = page.driver.browser
+    visit "/interactive/random_key"
+    @browser.manage.window.resize_to(1024,768)
+    @tab = @browser.window_handle
     page.find("#test_interactive").click
-    @new_tab = browser.window_handles.last
+    @new_tab = @browser.window_handles.last
+  end
+
+  after :each do
+    @browser.switch_to.window(@tab)
+    visit "/interactive/random_key"
+    page.find("#clear_canvas").click
   end
 
   it "draw lines" do
@@ -22,7 +28,7 @@ describe "Interactive mode:" do
 
     # FF default behaviour open new window will not switch to it,
     # therefore need to switch to new tab to verify
-    browser.switch_to.window(@new_tab)
+    @browser.switch_to.window(@new_tab)
     expect_image_match("draw_lines_interactive")
   end
 
@@ -32,7 +38,7 @@ describe "Interactive mode:" do
     page.find("canvas").draw_line(150, 150, 140, 170)
     page.find("canvas").draw_line(100, 200, 200, 200)
 
-    browser.switch_to.window(@new_tab)
+    @browser.switch_to.window(@new_tab)
     expect_image_match("draw_dots_interactive")
   end
 
@@ -42,7 +48,7 @@ describe "Interactive mode:" do
       page.find("canvas").draw_line(30*i+15, 10, 30*i+15, 20)
     end
 
-    browser.switch_to.window(@new_tab)
+    @browser.switch_to.window(@new_tab)
     expect_image_match("multiple_colors_interactive")
   end
 
@@ -51,7 +57,7 @@ describe "Interactive mode:" do
     page.find("canvas").draw_line(200, 100, 200, 100)
     page.find("#clear_canvas").click
 
-    browser.switch_to.window(@new_tab)
+    @browser.switch_to.window(@new_tab)
     expect_image_match("clear_canvas_interactive")
   end
 
@@ -64,7 +70,7 @@ describe "Interactive mode:" do
     page.find(".fa-eraser").click
     page.find("canvas").draw_line(40, 40, 40, 80)
 
-    browser.switch_to.window(@new_tab)
+    @browser.switch_to.window(@new_tab)
     expect_image_match("erase_canvas_interactive")
   end
 
@@ -74,7 +80,7 @@ describe "Interactive mode:" do
       page.find("canvas").draw_line(30*i+15, 10, 30*i+15, 20)
     end
 
-    browser.switch_to.window(@new_tab)
+    @browser.switch_to.window(@new_tab)
     expect_image_match("change_size_interactive")
   end
 end
