@@ -52,7 +52,6 @@ Support offline usage and local storage for single user mode
 
 ### TODO
 
-* Integrate [sprocket into sinatra](https://passcod.name/2012/06/03/sprockets-on-sinatra-and-heroku.html) for development mode
 * Translation
 * Preserve content switching between single user / multiple user mode
 * Develop with [websocket and EM](http://stackoverflow.com/questions/2999430/any-success-with-sinatra-working-together-with-eventmachine-websockets)
